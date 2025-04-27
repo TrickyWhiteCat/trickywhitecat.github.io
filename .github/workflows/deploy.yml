@@ -1,0 +1,38 @@
+# .github/workflows/deploy.yml
+name: Build and Deploy Jekyll site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Or whichever branch you push to
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby ✨
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1' # Choose a Ruby version compatible with your Jekyll
+          bundler-cache: true # Automatically runs bundle install and caches gems
+
+      - name: Build site 🔧
+        run: bundle exec jekyll build # Build the site into the _site directory
+        env:
+          JEKYLL_ENV: production
+
+      - name: Setup Pages ⚙️
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact ⬆️
+        uses: actions/upload-pages-artifact@v3
+        # Default path is _site
+
+      - name: Deploy to GitHub Pages 🚀
+        id: deployment
+        uses: actions/deploy-pages@v4
+        # Requires configure-pages and upload-pages-artifact steps above
