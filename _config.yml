@@ -1,2 +1,6 @@
-# theme: minima
+theme: minima
 permalink: /:categories/:slug.html
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-feed
